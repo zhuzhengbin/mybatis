@@ -18,7 +18,7 @@ public interface UserService {
      * @param id
      * @return
      */
-    String findById(int id);
+    User findById(int id);
 
     /**
      * 批量查询用户

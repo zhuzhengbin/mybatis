@@ -1,7 +1,9 @@
 package com.zhuzb.cn.service.impl;
 
 import com.zhuzb.cn.domain.User;
+import com.zhuzb.cn.mapper.UserMapper;
 import com.zhuzb.cn.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +18,12 @@ import java.util.List;
  */
 @Service
 public class UserServiceImpl implements UserService {
-    public String findById(int id) {
-        return "测试成功";
+
+    @Autowired
+    UserMapper userMapper;
+
+    public User findById(int id) {
+        return userMapper.findById(id);
     }
 
     public List<User> findByIds(int[] ids) {

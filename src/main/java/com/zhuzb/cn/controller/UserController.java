@@ -1,5 +1,6 @@
 package com.zhuzb.cn.controller;
 
+import com.zhuzb.cn.domain.User;
 import com.zhuzb.cn.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,7 +29,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String getUserName(@PathVariable("id") int id) {
+    public User getUserName(@PathVariable("id") int id) {
         return userService.findById(id);
     }
 }
