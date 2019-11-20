@@ -14,8 +14,8 @@ import java.sql.Date;
  */
 @Data
 public class User {
-    private Integer id;
-    private String name;
+    private Integer uid;
+    private String userName;
     private String sex;
     private Date birthday;
     private Double height;

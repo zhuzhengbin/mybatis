@@ -2,25 +2,14 @@
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
-<!--
-使用MyBatis时，可以使用整合在SpringBoot里的MyBatis，也可以直接使用
-当使用整合在SpringBoot中的MyBatis时，需要引入的时是MyBatis-Spring-Boot-Starter包
-可以在SpringBoot的配置文件(application.yml或application.properties)中直接声明mybatis中mapper文件所在的路径
-而且框架会自动从配置文件中读取出数据源，并将数据源注入到SqlSessionFactory中
-还会根据系统配置文件自动扫描mapper文件，并绑定到SqlSessionTemplate上，并注入Spring框架
-也就是说，当使用SpringBoot整合的MyBatis时，这个配置文件就不需要了
--->
-
 <configuration>
-    <!-- 声明配置文件-->
-    <properties resource="db.properties">
-    </properties>
-    <!-- 配置MyBatis环境-->
-    <environments default="development">
-        <environment id="development">
-            <transactionManager type="JDBC"/>
+
+    <properties resource="db.properties"></properties>
+
+    <environments default="dev">
+        <environment id="dev">
+            <transactionManager type="JDBC"></transactionManager>
             <dataSource type="POOLED">
-                <!-- 通过配置文件读取属性-->
                 <property name="driver" value="${jdbc.driver}"/>
                 <property name="url" value="${jdbc.url}"/>
                 <property name="username" value="${jdbc.username}"/>
@@ -28,14 +17,8 @@
             </dataSource>
         </environment>
     </environments>
-    <!-- 告知mapper文件的位置-->
-    <mappers>
-<!--
-url：统一资源定位符，需要使用绝对路径
-class：指明mapper接口文件
-resource：指明resources目录下的xml文件
 
--->
-        <mapper resource="com/zhuzb/UserMapper.xml"></mapper>
+    <mappers>
+        <mapper resource="mapper/UserMapper.xml"></mapper>
     </mappers>
 </configuration>

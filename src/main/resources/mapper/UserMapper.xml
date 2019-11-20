@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 在这里和UserMapper文件相关联 -->
+<mapper namespace="com.zhuzb.cn.mapper.UserMapper">
+    <resultMap id="user" type="com.zhuzb.cn.domain.User">
+        <id column="id" property="uid"></id>
+        <result column="name" property="userName"></result>
+    </resultMap>
+
+
+    <sql id="defaultSql">
+        select * from user
+    </sql>
+
+    <select id="findById" parameterType="int" resultMap="user">
+        select * from user where id = #{id}
+    </select>
+
+    <!--    这里的参数类型可以是int，也可以是list，因为在传参时加入了@Param注解，所以这里的参数类型写什么都没有影响-->
+    <select id="findByIds" parameterType="list" resultType="com.zhuzb.cn.domain.User">
+        <include refid="defaultSql"></include>
+        <where>
+            <if test="ids != null and ids.size() > 0">
+                <foreach collection="ids" open="id in (" close=")" separator="," item="id">
+                    #{id}
+                </foreach>
+            </if>
+        </where>
+    </select>
+
+    <!--    select * from user where name like '%张%'-->
+    <select id="findByName" parameterType="string" resultType="com.zhuzb.cn.domain.User">
+        <include refid="defaultSql"></include>
+        -- where name like '%${value}%'
+        <where>
+            name like #{name}
+        </where>
+    </select>
+
+    <insert id="saveUser" parameterType="com.zhuzb.cn.domain.User">
+-- selectKey标签中的keyProperty属性指明User中的主键，order默认就是after，这个标签会把获得的id值放入前面设置的uid中
+        <selectKey keyColumn="id" keyProperty="uid" order="AFTER" resultType="int">
+            select last_insert_id();
+        </selectKey>
+        insert into `user` (name, sex, birthday, height) values (#{userName}, #{sex}, #{birthday}, #{height})
+    </insert>
+
+    <select id="totalUsers" resultType="int">
+        select count(*) from user
+    </select>
+</mapper>
